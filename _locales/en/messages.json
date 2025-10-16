@@ -1,0 +1,71 @@
+{
+    "appName": {
+        "message": "WebRank Insight"
+    },
+    "appDescription": {
+        "message": "Discover website traffic and ranking insights using public data sources."
+    },
+    "loadingMessage": {
+        "message": "Loading data..."
+    },
+    "errorTitle": {
+        "message": "Error"
+    },
+    "errorMessage": {
+        "message": "Something went wrong. Please try again."
+    },
+    "noDataTitle": {
+        "message": "No Data Available"
+    },
+    "noDataMessage": {
+        "message": "We don't have enough data for this website."
+    },
+    "globalRank": {
+        "message": "Global Rank"
+    },
+    "countryRank": {
+        "message": "Country Rank"
+    },
+    "categoryRank": {
+        "message": "Category Rank"
+    },
+    "monthlyVisits": {
+        "message": "Monthly Visits"
+    },
+    "bounceRate": {
+        "message": "Bounce Rate"
+    },
+    "pagesPerVisit": {
+        "message": "Pages per Visit"
+    },
+    "avgDuration": {
+        "message": "Avg Visit Duration"
+    },
+    "trafficSources": {
+        "message": "Traffic Sources"
+    },
+    "direct": {
+        "message": "Direct"
+    },
+    "search": {
+        "message": "Search"
+    },
+    "social": {
+        "message": "Social"
+    },
+    "referrals": {
+        "message": "Referrals"
+    },
+    "mail": {
+        "message": "Email"
+    },
+    "paidReferrals": {
+        "message": "Paid Ads"
+    },
+    "noTrafficSourceData": {
+        "message": "No traffic source data available"
+    },
+    "footerDisclaimer": {
+        "message": "This extension is an independent tool and is not affiliated with SimilarWeb Ltd."
+    }
+}
