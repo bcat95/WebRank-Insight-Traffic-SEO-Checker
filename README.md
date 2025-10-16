@@ -2,6 +2,8 @@
 
 A lightweight Chrome extension that displays website traffic and ranking insights using public SimilarWeb data sources.
 
+![WebRank Insight](https://raw.githubusercontent.com/bcat95/WebRank-Insight-Traffic-SEO-Checker/refs/heads/main/images/og.png)
+
 ## Features
 
 - **Website Rankings**: Global Rank, Country Rank, Category Rank  
