@@ -28,6 +28,7 @@ class SimilarWebBackground {
     }
 
     async fetchWebsiteData(domain) {
+        throw new Error('Failed to fetch website data');
         try {
             // Fetch ranking data
             const rankResponse = await fetch(`https://rank.similarweb.com/api/v1/global?domain=${domain}`);

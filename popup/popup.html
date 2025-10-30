@@ -1,196 +1,223 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>SimilarWeb Traffic Analytics</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet" />
+        <link href="./popup.css" rel="stylesheet" type="text/css" />
+    </head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SimilarWeb Traffic Analytics</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
-    <link href="./popup.css" rel="stylesheet" type="text/css">
-</head>
-
-<body>
-    <div class="container-fluid p-0">
-        <!-- Loading State -->
-        <div id="loading" class="spinner-container">
-            <div class="spinner-border text-primary" role="status">
-                <span class="visually-hidden">Loading...</span>
-            </div>
-            <p class="mt-2">Loading data...</p>
-        </div>
-
-        <!-- Error State -->
-        <div id="error" class="alert alert-danger d-none m-3" role="alert">
-            <h6 class="alert-heading"><i class="bi bi-exclamation-triangle-fill me-2"></i>Error</h6>
-            <p class="mb-0">Something went wrong. Please try again.</p>
-        </div>
-
-        <!-- No Data State -->
-        <div id="no-data" class="alert alert-warning d-none m-3" role="alert">
-            <h6 class="alert-heading"><i class="bi bi-info-circle-fill me-2"></i>No Data Available</h6>
-            <p class="mb-0">We don't have enough data for this website.</p>
-        </div>
-
-        <!-- Data View -->
-        <div id="data-view" class="d-none">
-            <!-- Site Header -->
-            <div class="site-header">
-                <div class="site-title" id="site-name">Website Name</div>
-                <div class="site-description" id="site-description">Website description will appear here</div>
+    <body>
+        <div class="container-fluid p-0">
+            <!-- Loading State -->
+            <div id="loading" class="spinner-container">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <p class="mt-2">Loading data...</p>
             </div>
 
-            <!-- Navigation Tabs -->
-            <ul class="nav nav-tabs px-3" id="mainTabs" role="tablist">
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="overview-tab" data-bs-toggle="tab" data-bs-target="#overview"
-                        type="button" role="tab" aria-controls="overview" aria-selected="true">Overview</button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="traffic-tab" data-bs-toggle="tab" data-bs-target="#traffic"
-                        type="button" role="tab" aria-controls="traffic" aria-selected="false">Traffic</button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="audience-tab" data-bs-toggle="tab" data-bs-target="#audience"
-                        type="button" role="tab" aria-controls="audience" aria-selected="false">Audience</button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="keywords-tab" data-bs-toggle="tab" data-bs-target="#keywords"
-                        type="button" role="tab" aria-controls="keywords" aria-selected="false">Keywords</button>
-                </li>
-            </ul>
+            <!-- Error State -->
+            <div id="error" class="alert alert-danger d-none m-3" role="alert">
+                <h6 class="alert-heading"><i class="bi bi-exclamation-triangle-fill me-2"></i>Error</h6>
+                <p class="mb-0">Something went wrong. Please try again.</p>
+            </div>
 
-            <!-- Tab Content -->
-            <div class="tab-content px-3 pb-3" id="mainTabContent">
-                <!-- Overview Tab -->
-                <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview-tab">
-                    <div class="row mt-3">
-                        <div class="col-6 mb-1">
-                            <div class="metric-card">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <div class="metric-label">Global Rank</div>
-                                        <div class="metric-value" id="global-rank">N/A</div>
-                                    </div>
-                                    <i class="bi bi-globe fs-4 text-primary"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-6 mb-1">
-                            <div class="metric-card">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <div class="metric-label">Country Rank</div>
-                                        <div class="metric-value" id="country-rank">N/A</div>
-                                    </div>
-                                    <i class="bi bi-flag fs-4 text-primary"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-6 mb-1">
-                            <div class="metric-card">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <div class="metric-label">Category Rank</div>
-                                        <div class="metric-value" id="category-rank">N/A</div>
-                                    </div>
-                                    <i class="bi bi-tags fs-4 text-primary"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-6 mb-1">
-                            <div class="metric-card">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <div class="metric-label">Monthly Visits</div>
-                                        <div class="metric-value" id="monthly-visits">N/A</div>
-                                        <div class="text-muted small" id="visits-trend">N/A</div>
-                                    </div>
-                                    <i class="bi bi-people fs-4 text-primary"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="mt-3">
-                        <h6 class="fw-bold text-primary mb-2">Traffic Sources</h6>
-                        <div id="traffic-sources-overview">
-                            <!-- Traffic sources will be populated here -->
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Traffic Tab -->
-                <div class="tab-pane fade" id="traffic" role="tabpanel" aria-labelledby="traffic-tab">
-                    <div class="mt-3">
-                        <h6 class="fw-bold text-primary mb-2">Monthly Visits Trend</h6>
-                        <div class="chart-container">
-                            <canvas id="visits-chart"></canvas>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-6">
-                            <div class="metric-card">
-                                <div class="metric-label">Bounce Rate</div>
-                                <div class="metric-value" id="bounce-rate">N/A</div>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="metric-card">
-                                <div class="metric-label">Pages per Visit</div>
-                                <div class="metric-value" id="pages-per-visit">N/A</div>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="metric-card">
-                                <div class="metric-label">Avg. Duration</div>
-                                <div class="metric-value" id="avg-duration">N/A</div>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="metric-card">
-                                <div class="metric-label">Total Visits</div>
-                                <div class="metric-value" id="total-visits">N/A</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="mt-3">
-                        <h6 class="fw-bold text-primary mb-2">Traffic Sources Breakdown</h6>
-                        <div id="traffic-sources-detailed" class="custom-scrollbar"
-                            style="max-height: 200px; overflow-y: auto;">
-                            <!-- Detailed traffic sources will be populated here -->
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Audience Tab -->
-                <div class="tab-pane fade" id="audience" role="tabpanel" aria-labelledby="audience-tab">
-                    <div class="mt-3">
-                        <h6 class="fw-bold text-primary mb-2">Top Countries</h6>
-                        <div id="top-countries" class="custom-scrollbar" style="max-height: 250px; overflow-y: auto;">
-                            <!-- Top countries will be populated here -->
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Keywords Tab -->
-                <div class="tab-pane fade" id="keywords" role="tabpanel" aria-labelledby="keywords-tab">
-                    <div class="mt-3">
-                        <h6 class="fw-bold text-primary mb-2">Top Keywords</h6>
-                        <div id="top-keywords" class="custom-scrollbar" style="max-height: 250px; overflow-y: auto;">
-                            <!-- Top keywords will be populated here -->
-                        </div>
+            <!-- No Data State -->
+            <div id="no-data" class="alert alert-warning d-none m-3" role="alert">
+                <h6 class="alert-heading"><i class="bi bi-info-circle-fill me-2"></i>No Data Available</h6>
+                <p class="mb-0">We don't have enough data for this website.???</p>
+                <div class="help-section mt-2 text-start">
+                    <h5 class="text-muted"><i class="bi bi-lightbulb me-2"></i>How to Reset “Weekly Usage Limit” for Similarweb Extension</h5>
+                    <div class="p-2 text-start">
+                        <p class="text-start">The Similarweb - Website Traffic & SEO Checker extension has a mechanism that limits the number of checks per week (“Weekly usage limit”). If you'd like to reset this counter to use the extension again without reinstalling or uninstalling, follow these steps:</p>
+                        <ol class="ps-2 text-start">
+                            <li>
+                                <strong>Open Developer Tools (F12):</strong><br />
+                                Press <code>F12</code> or <code>Ctrl</code> + <code>Shift</code> + <code>I</code> on any webpage to open <strong>DevTools</strong>. Go to the <strong>Application</strong> tab (if hidden, click the <code>>></code> arrow to reveal additional tabs).
+                            </li>
+                            <p>
+                                <img src="https://upanh.nhatkythuthuat.com/images/2025/10/30/ScreenShot_20251030211437.png" alt="Illustration Screenshot" class="img-fluid mt-2" />
+                            </p>
+                            <li>
+                                <strong>Navigate to Storage → Extension Storage:</strong><br />
+                                On the left column, locate
+                                <strong>Storage → Extension Storage</strong>. Find the Similarweb extension (typically with ID <code>hoklmmgfnpapgjgcpechhaamimifchmp</code>).<br />
+                                Right-click on it → Select
+                                <strong>Sync</strong> to load the data.<br />
+                                Then, right-click again → Select
+                                <strong>Clear</strong> to delete the data.
+                            </li>
+                            <p>
+                                <img src="https://upanh.nhatkythuthuat.com/images/2025/10/30/ScreenShot_20251030211519.png" alt="Illustration Screenshot" class="img-fluid mt-2" />
+                            </p>
+                        </ol>
+                        <h6 class="mt-2 text-success text-start"><i class="bi bi-check-circle me-2"></i>Result</h6>
+                        <p class="text-start">
+                            Your weekly usage count will be reset to
+                            <code>0</code>, allowing you to use the Similarweb extension as if newly installed. 🎉
+                        </p>
+                        <h6 class="mt-2 text-warning text-start"><i class="bi bi-exclamation-triangle me-2"></i>Note:</h6>
+                        <p class="text-start">This method only clears local data and does not impact your account or API server data. If the extension has cloud sync enabled, the counter may automatically recover after a while.</p>
                     </div>
                 </div>
             </div>
+
+            <!-- Data View -->
+            <div id="data-view" class="d-none">
+                <!-- Site Header -->
+                <div class="site-header">
+                    <div class="site-title" id="site-name">Website Name</div>
+                    <div class="site-description" id="site-description">Website description will appear here</div>
+                </div>
+
+                <!-- Navigation Tabs -->
+                <ul class="nav nav-tabs px-3" id="mainTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="overview-tab" data-bs-toggle="tab" data-bs-target="#overview" type="button" role="tab" aria-controls="overview" aria-selected="true">Overview</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="traffic-tab" data-bs-toggle="tab" data-bs-target="#traffic" type="button" role="tab" aria-controls="traffic" aria-selected="false">Traffic</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="audience-tab" data-bs-toggle="tab" data-bs-target="#audience" type="button" role="tab" aria-controls="audience" aria-selected="false">Audience</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="keywords-tab" data-bs-toggle="tab" data-bs-target="#keywords" type="button" role="tab" aria-controls="keywords" aria-selected="false">Keywords</button>
+                    </li>
+                </ul>
+
+                <!-- Tab Content -->
+                <div class="tab-content px-3 pb-3" id="mainTabContent">
+                    <!-- Overview Tab -->
+                    <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview-tab">
+                        <div class="row mt-3">
+                            <div class="col-6 mb-1">
+                                <div class="metric-card">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <div class="metric-label">Global Rank</div>
+                                            <div class="metric-value" id="global-rank">N/A</div>
+                                        </div>
+                                        <i class="bi bi-globe fs-4 text-primary"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6 mb-1">
+                                <div class="metric-card">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <div class="metric-label">Country Rank</div>
+                                            <div class="metric-value" id="country-rank">N/A</div>
+                                        </div>
+                                        <i class="bi bi-flag fs-4 text-primary"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6 mb-1">
+                                <div class="metric-card">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <div class="metric-label">Category Rank</div>
+                                            <div class="metric-value" id="category-rank">N/A</div>
+                                        </div>
+                                        <i class="bi bi-tags fs-4 text-primary"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6 mb-1">
+                                <div class="metric-card">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <div class="metric-label">Monthly Visits</div>
+                                            <div class="metric-value" id="monthly-visits">N/A</div>
+                                            <div class="text-muted small" id="visits-trend">N/A</div>
+                                        </div>
+                                        <i class="bi bi-people fs-4 text-primary"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-3">
+                            <h6 class="fw-bold text-primary mb-2">Traffic Sources</h6>
+                            <div id="traffic-sources-overview">
+                                <!-- Traffic sources will be populated here -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Traffic Tab -->
+                    <div class="tab-pane fade" id="traffic" role="tabpanel" aria-labelledby="traffic-tab">
+                        <div class="mt-3">
+                            <h6 class="fw-bold text-primary mb-2">Monthly Visits Trend</h6>
+                            <div class="chart-container">
+                                <canvas id="visits-chart"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="metric-card">
+                                    <div class="metric-label">Bounce Rate</div>
+                                    <div class="metric-value" id="bounce-rate">N/A</div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="metric-card">
+                                    <div class="metric-label">Pages per Visit</div>
+                                    <div class="metric-value" id="pages-per-visit">N/A</div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="metric-card">
+                                    <div class="metric-label">Avg. Duration</div>
+                                    <div class="metric-value" id="avg-duration">N/A</div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="metric-card">
+                                    <div class="metric-label">Total Visits</div>
+                                    <div class="metric-value" id="total-visits">N/A</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-3">
+                            <h6 class="fw-bold text-primary mb-2">Traffic Sources Breakdown</h6>
+                            <div id="traffic-sources-detailed" class="custom-scrollbar" style="max-height: 200px; overflow-y: auto">
+                                <!-- Detailed traffic sources will be populated here -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Audience Tab -->
+                    <div class="tab-pane fade" id="audience" role="tabpanel" aria-labelledby="audience-tab">
+                        <div class="mt-3">
+                            <h6 class="fw-bold text-primary mb-2">Top Countries</h6>
+                            <div id="top-countries" class="custom-scrollbar" style="max-height: 250px; overflow-y: auto">
+                                <!-- Top countries will be populated here -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Keywords Tab -->
+                    <div class="tab-pane fade" id="keywords" role="tabpanel" aria-labelledby="keywords-tab">
+                        <div class="mt-3">
+                            <h6 class="fw-bold text-primary mb-2">Top Keywords</h6>
+                            <div id="top-keywords" class="custom-scrollbar" style="max-height: 250px; overflow-y: auto">
+                                <!-- Top keywords will be populated here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
 
-    <script src="./bootstrap.bundle.min.js"></script>
-    <script src="./chart.js"></script>
-    <script src="./popup.js"></script>
-</body>
-
+        <script src="./bootstrap.bundle.min.js"></script>
+        <script src="./chart.js"></script>
+        <script src="./popup.js"></script>
+    </body>
 </html>
